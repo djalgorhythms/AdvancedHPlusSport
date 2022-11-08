@@ -2,6 +2,7 @@
 {
     public class ProductQueryParameters : QueryParameters
     {
-        decimal 
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
     }
 }
