@@ -13,8 +13,10 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
     options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version"); // this would be remmed out for querystring versioning - then it all works out of the box thanks to the Nuget package
+    // we would also add 
+    //  options.ApiVersionReader = new QueryStringApiVersionReader("hps-api-version");
 
-    options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

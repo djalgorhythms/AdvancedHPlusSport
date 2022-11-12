@@ -24,7 +24,7 @@ namespace HPlusSport.API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllProducts([FromQuery] ProductQueryParameters queryParameters)
         {
-            IQueryable<Product> products = 
+            IQueryable<Product> products =
                 _context.Products.Where(p => p.IsAvailable == true);
 
             if (queryParameters.MinPrice != null)
