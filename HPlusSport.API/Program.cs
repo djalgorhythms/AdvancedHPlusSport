@@ -35,6 +35,16 @@ builder.Services.AddDbContext<ShopContext>(options =>
     options.UseInMemoryDatabase("Shop");
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
+        .WithOrigins("https://localhost:7086")
+        .WithHeaders("X-API-Version");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,6 +61,8 @@ else
 app.UseHttpsRedirection();  // this is for API security - redirects http to the https version of the application
 
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 
