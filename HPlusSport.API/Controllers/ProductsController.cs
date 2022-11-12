@@ -18,7 +18,7 @@ namespace HPlusSport.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllProducts([FromQuery]ProductQueryParameters queryParameters)
+        public async Task<ActionResult> GetAllProducts([FromQuery] ProductQueryParameters queryParameters)
         {
             IQueryable<Product> products = _context.Products;
 
@@ -32,6 +32,14 @@ namespace HPlusSport.API.Controllers
             {
                 products = products.Where(
                     p => p.Price <= queryParameters.MaxPrice.Value);
+            }
+
+            if (!string.IsNullOrEmpty(queryParameters.SearchTerm))
+            {
+                products = products.Where(
+                    p => p.Sku.ToLower().Contains(queryParameters.SearchTerm.ToLower()) ||
+                    p.Name.ToLower().Contains(queryParameters.SearchTerm.ToLower()));
+
             }
 
             if (!string.IsNullOrEmpty(queryParameters.Sku))
@@ -91,7 +99,10 @@ namespace HPlusSport.API.Controllers
 
             return CreatedAtAction(
                 "GetProduct",
-                new { id = product.Id },
+                new
+                {
+                    id = product.Id
+                },
                 product);
         }
 
@@ -114,7 +125,7 @@ namespace HPlusSport.API.Controllers
                 if (!_context.Products.Any(p => p.Id == id))
                 {
                     return NotFound();
-                } 
+                }
                 else
                 {
                     throw;
@@ -141,7 +152,7 @@ namespace HPlusSport.API.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        public async Task<ActionResult> DeleteMultiple([FromQuery]int[] ids)
+        public async Task<ActionResult> DeleteMultiple([FromQuery] int[] ids)
         {
             var products = new List<Product>();
             foreach (var id in ids)

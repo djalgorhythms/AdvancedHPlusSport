@@ -13,5 +13,11 @@
         public string Name
         {
             get; set; } = string.Empty;
+
+        public string SearchTerm
+        {
+            get; set; 
+        } = String.Empty;
+
     } 
 }
