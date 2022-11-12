@@ -8,6 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.Audience = "scope1";
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+        {
+            ValidateAudience = false
+        };
+    });
+
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
@@ -59,7 +70,7 @@ else
 }
 
 app.UseHttpsRedirection();  // this is for API security - redirects http to the https version of the application
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors();
