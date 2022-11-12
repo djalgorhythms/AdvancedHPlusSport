@@ -48,7 +48,17 @@ namespace HPlusSport.API.Controllers
             }
 
 
+            if (!string.IsNullOrEmpty(queryParameters.SortBy))
+            {
+                if (typeof(Product).GetProperty(queryParameters.SortBy) != null)
+                {
+                    products = products.OrderByCustom(
+                        queryParameters.SortBy,
+                        queryParameters.SortOrder);
+                }
+            }
 
+            // remember that all sorts and filtering occur prior to pagination
 
             products = products
                 .Skip(queryParameters.Size * (queryParameters.Page - 1))
