@@ -43,8 +43,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection();  // this is for API security - redirects http to the https version of the application
 
 app.UseAuthorization();
 
