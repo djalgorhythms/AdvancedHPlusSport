@@ -19,6 +19,13 @@ builder.Services.AddApiVersioning(options =>
 
 });
 
+builder.Services.AddVersionedApiExplorer(options =>  // this section is a work around for the version error in Swagger, hopefully to be addressed in a future update
+{
+    options.GroupNameFormat = "'v'VVV"; // this is the pattern 
+    options.SubstituteApiVersionInUrl = true;
+
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
